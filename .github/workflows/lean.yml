@@ -1,0 +1,23 @@
+name: Lean
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject escape hatches
+        run: |
+          if grep -rnE '\bsorry\b|^\s*axiom\b|native_decide|implemented_by|@\[extern' Triviality Triviality.lean; then
+            echo "escape hatch found"; exit 1; fi
+      - name: Build with the Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          use-mathlib-cache: true
