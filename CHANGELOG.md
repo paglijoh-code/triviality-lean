@@ -4,6 +4,16 @@ All notable changes to `triviality-lean` are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [Semantic Versioning](https://semver.org/) (before 1.0, a minor version may break the API).
 
+## [0.2.0] - 2026-11-24
+
+### Added
+- `two_ways`: resilience under every union of cells of a family of disjoint blocks, characterized
+  by `UniformRate` (A) or `AntecedentIndep` (B); the algebraic core `two_ways_vec` and
+  `two_ways_vec_converse`; the corollaries `two_ways_lewis` and `two_ways_fitelson`.
+- `pie_iff_resilient`: the per-instance form of R5 (the step is Fitelson 2015's).
+- Route models: `Triviality.Routes.GoldsteinSantorio`, `Triviality.Routes.StalnakerBernoulli`
+  (with `sb_finite_verdict`) and `Triviality.Routes.SequenceSemantics`.
+
 ## [0.1.0] - 2026-11-22
 
 First release. Lean 4 v4.36.0, Mathlib v4.36.0.
@@ -26,4 +36,5 @@ First release. Lean 4 v4.36.0, Mathlib v4.36.0.
   `0 < Pr Qᶜ` (both were redundant).
 - `Lemmas.lean` is now `Probability.lean`; countermodels moved to `Triviality/Countermodels/`.
 
+[0.2.0]: https://github.com/paglijoh-code/triviality-lean/releases/tag/v0.2.0
 [0.1.0]: https://github.com/paglijoh-code/triviality-lean/releases/tag/v0.1.0

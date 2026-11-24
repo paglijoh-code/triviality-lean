@@ -21,6 +21,7 @@ almost surely: `Pr (P ∧ ((Q ∧ I) ∨ (¬Q ∧ ¬I))) = 1`.
 * `Triviality.fitelson_maximality`: R4, the pair `{⊤, P ⊃ Q}` is maximal.
 * `Triviality.fitelson_ie_iff_resilient`: R5, PIE and the Resilient Equation are equivalent under
   the Thesis.
+* `Triviality.pie_iff_resilient`: the same for one instance, from two instances of the Thesis.
 
 ## References
 
@@ -182,5 +183,23 @@ theorem fitelson_ie_iff_resilient (c : Credence Ω) (imp : Conditional Ω)
     unfold PIE
     rw [e1, e2, Finset.inter_comm X P]
     rw [e3]
+
+/-- The per-instance form of R5 (the step is Fitelson 2015's): if `0 < Pr (X ∧ P)` and the Thesis
+holds for `(X, P → Q)` and for `(X ∧ P, Q)`, then PIE for `(X, P, Q)` is equivalent to the
+Resilient Equation for `P → Q` under `X`. -/
+theorem pie_iff_resilient (c : Credence Ω) (imp : Conditional Ω) (P Q X : Finset Ω)
+    (hg : 0 < c.pr (X ∩ P)) (h1 : Thesis c imp X (imp P Q)) (h2 : Thesis c imp (X ∩ P) Q) :
+    PIE c imp X P Q ↔ Resilient c imp P Q X := by
+  have hX : 0 < c.pr X := lt_of_lt_of_le hg (pr_mono c Finset.inter_subset_left)
+  have e1 := h1 hX
+  have e2 := h2 hg
+  constructor
+  · intro h _
+    unfold PIE at h
+    rw [Finset.inter_comm P X, ← e1, ← e2, h]
+  · intro h
+    have e3 := h (by rwa [Finset.inter_comm])
+    unfold PIE
+    rw [e1, e2, e3, Finset.inter_comm P X]
 
 end Triviality
